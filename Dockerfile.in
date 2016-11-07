@@ -1,0 +1,13 @@
+FROM debian:jessie
+MAINTAINER Naoaki Obiki
+
+ARG username="9zilla"
+ARG password="9zilla"
+
+RUN apt-get update
+
+#include "./9zilla/include/vanilla.docker"
+#include "./9zilla/include/php.docker"
+#include "./9zilla/include/apache2.docker"
+#include "./9zilla/include/nvm.docker"
+#include "./9zilla/include/mariadb-client.docker"
