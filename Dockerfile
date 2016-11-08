@@ -57,7 +57,7 @@ RUN chown -R $username:$username /var/virtualdomains/
 RUN mkdir -p /var/log/apache2/vhost/
 RUN chmod 755 /var/log/apache2/
 RUN chmod 755 /var/log/apache2/vhost/
-ADD settings/apache2/example.conf
+ADD settings/apache2/example.conf /etc/apache2/sites-available/
 RUN a2ensite example
 RUN systemctl enable apache2
 ADD settings/nvm/nvm_install.sh /home/$username/
