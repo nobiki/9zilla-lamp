@@ -1,4 +1,4 @@
-Dockerfile: Dockerfile.in ./9zilla/include/*.docker
+Dockerfile: Dockerfile.in ./include/*.docker
 	cpp -P -o Dockerfile Dockerfile.in
 
 build: Dockerfile
