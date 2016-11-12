@@ -1,2 +1,2 @@
 # 9zilla-lamp
-Debian LAMP Web Server.
+Debian Web Server - Apache, PHP, NodeJS
