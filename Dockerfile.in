@@ -11,3 +11,6 @@ RUN apt-get update
 #include "./9zilla/include/apache2.docker"
 #include "./9zilla/include/nvm.docker"
 #include "./9zilla/include/mariadb-client.docker"
+#include "./9zilla/include/xvfb.docker"
+#include "./9zilla/include/browser.docker"
+#include "./9zilla/include/selenium-behat.docker"
