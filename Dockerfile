@@ -63,3 +63,26 @@ RUN systemctl enable apache2
 ADD settings/nvm/nvm_install.sh /home/$username/
 RUN chmod +wx /home/$username/nvm_install.sh
 RUN apt-get install -y mariadb-client libmysqlclient-dev
+RUN apt-get install -y xvfb
+RUN echo "Xvfb :99 -screen 0 1920x1200x24 > /dev/null &" > /usr/local/bin/selenium-xvfb
+RUN chmod +x /usr/local/bin/selenium-xvfb
+RUN wget -q -O - "https://dl-ssl.google.com/linux/linux_signing_key.pub" | apt-key add -
+RUN echo 'deb http://dl.google.com/linux/chrome/deb/ stable main' >> /etc/apt/sources.list.d/google-chrome.list
+RUN apt-get update
+RUN apt-get install -y google-chrome-stable
+RUN apt-get install -y firefox-esr
+RUN apt-get install -y php5 php5-curl php5-imagick imagemagick
+RUN systemctl disable apache2
+RUN curl -sS "https://getcomposer.org/installer" | php -- --install-dir=/usr/local/bin
+RUN apt-get install -y default-jdk
+ADD archives/selenium-server-standalone.jar /usr/local/bin/
+RUN echo "DISPLAY=:99 java -jar /usr/local/bin/selenium-server-standalone.jar -Dwebdriver.chrome.driver=/usr/local/lib/selenium/chromedriver" > /usr/local/bin/selenium
+RUN chmod +x /usr/local/bin/selenium
+RUN mkdir /usr/local/lib/selenium
+ADD archives/chromedriver /usr/local/lib/selenium/
+RUN mkdir -p /usr/local/lib/behat/
+ADD settings/behat/composer.json /usr/local/lib/behat/
+ADD settings/behat/behat.yml /usr/local/lib/behat/
+RUN chown -R $username:$username /usr/local/lib/behat/
+RUN ln -s /usr/local/lib/behat/bin/behat /usr/local/bin/behat
+RUN ln -s /usr/local/lib/behat/ /home/$username/ci/behat
