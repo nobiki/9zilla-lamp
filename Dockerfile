@@ -44,7 +44,8 @@ RUN chmod +x /usr/local/bin/peco
 RUN git clone "https://github.com/b4b4r07/enhancd.git" /usr/local/src/enhancd
 RUN chmod +x /usr/local/src/enhancd/init.sh
 RUN echo 'source /usr/local/src/enhancd/init.sh' >> /home/$username/.bash_profile
-ENV ANYENV_HOME /home/$username/.anyenv
+ENV HOME /home/$username
+ENV ANYENV_HOME $HOME/.anyenv
 ENV ANYENV_ENV $ANYENV_HOME/envs
 RUN git clone "https://github.com/riywo/anyenv" $ANYENV_HOME
 RUN echo 'export PATH="$HOME/.anyenv/bin:$PATH"' >> /home/$username/.bash_profile
@@ -68,8 +69,7 @@ RUN chmod 755 /var/log/apache2/vhost/
 ADD settings/apache2/example.conf /etc/apache2/sites-available/
 RUN a2ensite example
 RUN systemctl enable apache2
-ADD settings/nvm/nvm_install.sh /home/$username/
-RUN chmod +wx /home/$username/nvm_install.sh
+RUN anyenv install ndenv
 RUN apt-get install -y mariadb-client libmysqlclient-dev
 RUN apt-get install -y xvfb
 RUN echo "Xvfb :99 -screen 0 1920x1200x24 > /dev/null &" > /usr/local/bin/selenium-xvfb
