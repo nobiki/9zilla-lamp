@@ -44,6 +44,14 @@ RUN chmod +x /usr/local/bin/peco
 RUN git clone "https://github.com/b4b4r07/enhancd.git" /usr/local/src/enhancd
 RUN chmod +x /usr/local/src/enhancd/init.sh
 RUN echo 'source /usr/local/src/enhancd/init.sh' >> /home/$username/.bash_profile
+ENV ANYENV_HOME /home/$username/.anyenv
+ENV ANYENV_ENV $ANYENV_HOME/envs
+RUN git clone "https://github.com/riywo/anyenv" $ANYENV_HOME
+RUN echo 'export PATH="$HOME/.anyenv/bin:$PATH"' >> /home/$username/.bash_profile
+RUN echo 'eval "$(anyenv init -)"' >> /home/$username/.bash_profile
+ENV PATH $ANYENV_HOME/bin:$PATH
+RUN mkdir $ANYENV_ENV
+RUN chown -R $username:$username $ANYENV_HOME
 RUN apt-get install -y php5 php5-dev php5-cgi php5-cli php5-curl php5-mongo php5-mysql php5-memcache php5-mcrypt mcrypt php5-readline php5-json php5-imagick imagemagick php5-oauth
 RUN systemctl disable apache2
 RUN curl -sS "https://getcomposer.org/installer" | php -- --install-dir=/usr/local/bin
