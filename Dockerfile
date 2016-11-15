@@ -70,6 +70,7 @@ ADD settings/apache2/example.conf /etc/apache2/sites-available/
 RUN a2ensite example
 RUN systemctl enable apache2
 RUN anyenv install ndenv
+RUN chown -R $username:$username $ANYENV_HOME
 RUN apt-get install -y mariadb-client libmysqlclient-dev
 RUN apt-get install -y xvfb
 RUN echo "Xvfb :99 -screen 0 1920x1200x24 > /dev/null &" > /usr/local/bin/selenium-xvfb
