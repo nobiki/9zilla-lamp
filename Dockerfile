@@ -56,18 +56,14 @@ RUN chown -R $username:$username $ANYENV_HOME
 RUN apt-get install -y php5 php5-dev php5-cgi php5-cli php5-curl php5-mongo php5-mysql php5-memcache php5-mcrypt mcrypt php5-readline php5-json php5-imagick imagemagick php5-oauth
 RUN systemctl disable apache2
 RUN curl -sS "https://getcomposer.org/installer" | php -- --install-dir=/usr/local/bin
+RUN chown $username:$username /home/$username/.composer
 RUN apt-get install -y apache2
 RUN a2enmod rewrite ssl proxy status setenvif unique_id
 RUN a2dismod userdir
 RUN a2dissite 000-default default-ssl
-RUN mkdir -p /var/virtualdomains/example.local/
-RUN echo "example.local" > /var/virtualdomains/example.local/index.html
-RUN chown -R $username:$username /var/virtualdomains/
 RUN mkdir -p /var/log/apache2/vhost/
 RUN chmod 755 /var/log/apache2/
 RUN chmod 755 /var/log/apache2/vhost/
-ADD settings/apache2/example.conf /etc/apache2/sites-available/
-RUN a2ensite example
 RUN systemctl enable apache2
 RUN anyenv install ndenv
 RUN chown -R $username:$username $ANYENV_HOME
@@ -83,6 +79,7 @@ RUN apt-get install -y firefox-esr
 RUN apt-get install -y php5 php5-curl php5-imagick imagemagick
 RUN systemctl disable apache2
 RUN curl -sS "https://getcomposer.org/installer" | php -- --install-dir=/usr/local/bin
+RUN chown $username:$username /home/$username/.composer
 RUN apt-get install -y default-jdk
 ADD archives/selenium-server-standalone.jar /usr/local/bin/
 RUN echo "DISPLAY=:99 java -jar /usr/local/bin/selenium-server-standalone.jar -Dwebdriver.chrome.driver=/usr/local/lib/selenium/chromedriver" > /usr/local/bin/selenium

@@ -6,7 +6,7 @@ ARG password="9zilla"
 
 RUN apt-get update
 
-#include "./include/vanilla.docker"
+#include "./include/plain.docker"
 #include "./include/anyenv.docker"
 #include "./include/php.docker"
 #include "./include/apache2.docker"
