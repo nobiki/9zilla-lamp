@@ -1,18 +1,19 @@
 FROM debian:jessie
 MAINTAINER Naoaki Obiki
 
-RUN apt-get update
+RUN apt-get update && apt-get install -y sudo git
 
 #include "./include/useradd.docker"
-#include "./include/plain.docker"
+#include "./include/base.docker"
 #include "./include/direnv.docker"
 
-#include "./include/xvfb.docker"
-#include "./include/browser.docker"
-#include "./include/selenium-behat.docker"
-
 #include "./include/php.docker"
+#include "./include/composer.docker"
 
 #include "./include/apache2.docker"
-
 #include "./include/mariadb-client.docker"
+
+COPY bootstrap.sh /
+RUN chmod +x /bootstrap.sh
+
+CMD ["/bootstrap.sh"]
