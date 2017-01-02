@@ -39,6 +39,9 @@ RUN echo 'if [ -e $HOME/.anyenv/bin ]; then' >> /home/$username/.bash_profile
 RUN echo '  export PATH="$HOME/.anyenv/bin:$PATH"' >> /home/$username/.bash_profile
 RUN echo '  eval "$(anyenv init -)"' >> /home/$username/.bash_profile
 RUN echo 'fi' >> /home/$username/.bash_profile
+RUN wget "https://dl.eff.org/certbot-auto" -P /usr/local/bin/
+RUN chmod a+x /usr/local/bin/certbot-auto
+RUN /usr/local/bin/certbot-auto --os-packages-only --non-interactive
 RUN apt-get install -y direnv
 RUN echo 'eval "$(direnv hook bash)"' >> /home/$username/.bash_profile
 RUN apt-get install -y php5 php5-dev php5-cgi php5-cli php5-curl php5-mongo php5-mysql php5-memcache php5-mcrypt mcrypt php5-readline php5-json php5-imagick imagemagick php5-oauth
