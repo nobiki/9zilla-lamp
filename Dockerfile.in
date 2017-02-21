@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y sudo git
 #include "./include/certbot.docker"
 #include "./include/direnv.docker"
 
-#include "./include/lamp-php.docker"
+#include "./include/apt-php.docker"
 #include "./include/composer.docker"
 
 #include "./include/apache2.docker"
