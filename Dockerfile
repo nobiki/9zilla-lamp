@@ -47,7 +47,8 @@ RUN echo 'eval "$(direnv hook bash)"' >> /home/$username/.bash_profile
 RUN apt-get install -y php5 php5-dev php5-cgi php5-cli php5-curl php5-mongo php5-mysql php5-memcache php5-mcrypt mcrypt php5-readline php5-json php5-imagick imagemagick php5-oauth
 RUN systemctl disable apache2
 RUN curl -sS "https://getcomposer.org/installer" | php -- --install-dir=/usr/local/bin
-RUN mkdir -p /home/$username/.composer && chown $username:$username /home/$username/.composer
+RUN mkdir -p /home/$username/.composer && chown -R $username:$username /home/$username/.composer
+ENV COMPOSER_HOME /home/$username/.composer
 RUN apt-get install -y apache2
 RUN a2enmod rewrite ssl proxy status setenvif unique_id
 RUN a2dismod userdir
